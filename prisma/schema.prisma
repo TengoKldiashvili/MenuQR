@@ -8,12 +8,45 @@ datasource db {
 }
 
 model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  name          String?
+  emailVerified DateTime?
+  menus         Menu[]
+  createdAt     DateTime  @default(now())
+}
+
+model EmailVerificationCode {
   id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String?
-  menus     Menu[]
+  email     String
+  codeHash  String
+  expiresAt DateTime
   createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model RateLimitEvent {
+  id        String   @id @default(uuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key])
+}
+
+model Menu {
+  id          String  @id @default(uuid())
+  title       String?
+  description String?
+  theme       String  @default("light")
+  logoUrl     String?
+  status      String  @default("DRAFT")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  categories Category[]
+  createdAt  DateTime   @default(now())
 }
 
 model Category {
@@ -35,22 +68,12 @@ model Item {
   categoryId  String
   createdAt   DateTime @default(now())
 }
+model PasswordResetCode {
+  id        String   @id @default(uuid())
+  email     String
+  codeHash  String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 
-model Menu {
-  id          String      @id @default(uuid())
-  title       String?
-  description String?
-  theme       String      @default("light")
-  logoUrl     String?
-  status      MenuStatus  @default(DRAFT)
-
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-  categories  Category[]
-  createdAt   DateTime    @default(now())
-}
-
-enum MenuStatus {
-  DRAFT
-  ACTIVE
+  @@index([email])
 }

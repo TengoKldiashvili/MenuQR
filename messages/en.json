@@ -27,7 +27,14 @@
     "submit": "Create account",
     "loading": "Creating…",
     "haveAccount": "Already have an account?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "errors": {
+      "missingFields": "All fields are required",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "emailExists": "User with this email already exists",
+      "generic": "Registration failed",
+      "invalidEmail": "Please enter a valid email address"
+    }
   },
 
   "navigation": {
@@ -42,7 +49,7 @@
     "emptyCta": "Create your first menu",
     "categories": "Categories",
     "items": "Items",
-    "limitReached":"The free plan allows only one menu. Upgrade to create more."
+    "limitReached": "The free plan allows only one menu. Upgrade to create more."
   },
 
   "buttons": {
@@ -105,8 +112,8 @@
   },
 
   "item": {
-    "name":"Name",
-    "price":"Price",
+    "name": "Name",
+    "price": "Price",
     "edit": "Edit",
     "save": "Save",
     "saving": "Saving…",
@@ -166,6 +173,8 @@
   },
 
   "mainpage": {
+    "goToDashboard": "Go to dashboard",
+
     "brand": "DMENU",
 
     "navSignIn": "Sign in",
@@ -221,5 +230,55 @@
 
   "unauthorized": "Unauthorized",
   "menuLimitReached": "The free plan allows only one menu. Upgrade to create more.",
-  "titleRequired": "Title is required"
+  "titleRequired": "Title is required",
+
+  "resetPassword": {
+    "title": "Reset password",
+    "subtitle": "Enter the code and your new password",
+    "code": "Verification code",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "submit": "Reset password",
+    "loading": "Resetting...",
+    "success": "Password successfully changed",
+    "backToLogin": "Back to login",
+    "errors": {
+      "emailNotFound": "Email not found",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordsNotMatch": "Passwords do not match",
+      "generic": "Something went wrong"
+    }
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "subtitle": "Enter your email and we will send you a code",
+    "email": "Email",
+    "submit": "Send code",
+    "loading": "Sending...",
+    "success": "A verification code was sent to your email",
+    "backToLogin": "Back to login",
+    "errors": {
+      "emailRequired": "Email is required",
+      "userNotFound": "User with this email does not exist",
+      "generic": "Something went wrong"
+    }
+  },
+  "verifyEmail": {
+    "title": "Verify your email",
+    "subtitle": "Code sent to:",
+    "codePlaceholder": "6-digit code",
+    "submit": "Verify",
+    "loading": "Verifying...",
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidCode": "Invalid code",
+      "codeExpired": "Code expired",
+      "generic": "Verification failed"
+    }
+  },
+  "menuActions": {
+  "confirmDelete": "Are you sure you want to delete this menu?",
+  "deleteTitle": "Delete menu"
+}
+
 }

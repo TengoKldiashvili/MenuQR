@@ -1,55 +1,73 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { db } from "@/lib/db";
+import { sendVerificationCode } from "@/lib/mailer";
 
-export async function POST(request: NextRequest) {
+
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+function isValidEmail(email: string) {
+  return EMAIL_REGEX.test(email);
+}
+
+function generateCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
-    const { email, password, name } = body;
+    const { name, email, password } = await req.json();
 
-    if (!email || !password) {
+if (!email || !isValidEmail(email)) {
+  return NextResponse.json(
+    { error: "INVALID_EMAIL" },
+    { status: 400 }
+  );
+}
+
+if (!password || password.length < 8) {
+  return NextResponse.json(
+    { error: "PASSWORD_TOO_SHORT" },
+    { status: 400 }
+  );
+}
+
+    const exists = await db.user.findUnique({ where: { email } });
+    if (exists) {
       return NextResponse.json(
-        { error: "Email and password are required" },
-        { status: 400 }
+        { error: "EMAIL_EXISTS" },
+        { status: 409 }
       );
     }
 
-    const existingUser = await db.user.findUnique({
-      where: { email },
-    });
+    const passwordHash = await bcrypt.hash(password, 12);
 
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "User already exists" },
-        { status: 400 }
-      );
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await db.user.create({
+    await db.user.create({
       data: {
         email,
-        password: hashedPassword,
+        passwordHash,
         name: name || null,
       },
     });
+    const code = generateCode();
+    const codeHash = await bcrypt.hash(code, 10);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
+    await db.emailVerificationCode.deleteMany({ where: { email } });
+
+    await db.emailVerificationCode.create({
+      data: { email, codeHash, expiresAt },
+    });
+
+    await sendVerificationCode(email, code);
+
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    console.error("Register error:", e);
     return NextResponse.json(
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error("Registration error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json(
-      { error: errorMessage },
+      { error: "INTERNAL_ERROR" },
       { status: 500 }
     );
   }
 }
-
