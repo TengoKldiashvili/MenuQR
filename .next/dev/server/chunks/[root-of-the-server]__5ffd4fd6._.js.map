@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/i18n.ts"],"sourcesContent":["export const locales = [\"en\", \"ka\"] as const;\nexport type Locale = (typeof locales)[number];\n\nexport const defaultLocale: Locale = \"en\";\n"],"names":[],"mappings":";;;;;;AAAO,MAAM,UAAU;IAAC;IAAM;CAAK;AAG5B,MAAM,gBAAwB"}},
+    {"offset": {"line": 61, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/proxy.ts"],"sourcesContent":["import createMiddleware from \"next-intl/middleware\";\nimport { locales, defaultLocale } from \"./i18n\";\n\nexport default createMiddleware({\n  locales,\n  defaultLocale\n});\n\nexport const config = {\n  matcher: [\"/((?!_next|api|favicon.ico).*)\"],\n};\n"],"names":[],"mappings":";;;;;;AAAA;AACA;;;uCAEe,IAAA,iMAAgB,EAAC;IAC9B,SAAA,+GAAO;IACP,eAAA,qHAAa;AACf;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;KAAiC;AAC7C"}}]
+}

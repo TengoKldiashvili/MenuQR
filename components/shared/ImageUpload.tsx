@@ -53,7 +53,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
         <UploadDropzone
           endpoint="itemImageUploader"
           onClientUploadComplete={(res) => {
-            const url = res?.[0]?.url;
+            const url = res?.[0]?.ufsUrl;
             if (url) {
               onChange(url);
               setError(null);
@@ -71,8 +71,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               "border border-white/20 rounded-xl bg-transparent hover:border-white/40 transition",
             label: "text-white/80 text-sm",
             uploadIcon: "text-white/60",
-            button:
-              "bg-transparent text-white/80 text-sm font-medium",
+            button: "bg-transparent text-white/80 text-sm font-medium",
           }}
         />
       )}

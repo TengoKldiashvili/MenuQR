@@ -17,14 +17,10 @@ export default function DarkTheme({ menu }: { menu: PublicMenu }) {
           </div>
         )}
 
-        <h1 className="text-4xl font-bold text-center mb-3">
-          {menu.title}
-        </h1>
+        <h1 className="text-4xl font-bold text-center mb-3">{menu.title}</h1>
 
         {menu.description && (
-          <p className="text-center text-zinc-400 mb-12">
-            {menu.description}
-          </p>
+          <p className="text-center text-zinc-400 mb-12">{menu.description}</p>
         )}
 
         <div className="space-y-14">
@@ -52,9 +48,7 @@ export default function DarkTheme({ menu }: { menu: PublicMenu }) {
 
                     <div className="flex-1">
                       <div className="flex justify-between items-start">
-                        <h3 className="font-medium text-lg">
-                          {item.name}
-                        </h3>
+                        <h3 className="font-medium text-lg">{item.name}</h3>
                         {item.price && (
                           <span className="text-emerald-400 font-semibold">
                             {item.price.toFixed(2)} ₾
@@ -74,7 +68,6 @@ export default function DarkTheme({ menu }: { menu: PublicMenu }) {
             </section>
           ))}
         </div>
-
       </div>
     </div>
   );

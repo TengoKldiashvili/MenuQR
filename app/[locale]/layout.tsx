@@ -21,27 +21,24 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  const normalizedLocale: Locale =
-    locale.startsWith("ka")
-      ? "ka"
-      : locale.startsWith("en")
-      ? "en"
-      : notFound();
+  const normalizedLocale: Locale = locale.startsWith("ka")
+    ? "ka"
+    : locale.startsWith("en")
+    ? "en"
+    : notFound();
 
   const fontClass =
-    normalizedLocale === "ka"
-      ? fontKa.variable
-      : fontEn.variable;
+    normalizedLocale === "ka" ? fontKa.variable : fontEn.variable;
 
   return (
     <div
       className={`${fontClass} min-h-screen antialiased`}
-      style={{
-        "--font-sans":
-          normalizedLocale === "ka"
-            ? "var(--font-ka)"
-            : "var(--font-en)",
-      } as React.CSSProperties}
+      style={
+        {
+          "--font-sans":
+            normalizedLocale === "ka" ? "var(--font-ka)" : "var(--font-en)",
+        } as React.CSSProperties
+      }
     >
       <NextIntlClientProvider
         locale={normalizedLocale}

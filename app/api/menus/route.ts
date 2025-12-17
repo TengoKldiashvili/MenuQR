@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import { LIMITS } from "@/lib/limits";
 import { getTranslations } from "next-intl/server";
 
-// Derive locale from the first path segment in the request URL
 function getLocaleFromRequest(request: NextRequest): string {
   const pathname = request.nextUrl.pathname;
   const locale = pathname.split("/")[1];
@@ -23,10 +22,7 @@ export async function GET(request: NextRequest) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: t("unauthorized") },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: t("unauthorized") }, { status: 401 });
     }
 
     const menus = await db.menu.findMany({
@@ -62,10 +58,7 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: t("unauthorized") },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: t("unauthorized") }, { status: 401 });
     }
 
     const menusCount = await db.menu.count({
@@ -83,10 +76,7 @@ export async function POST(request: NextRequest) {
     const { title, description, theme, logoUrl } = body;
 
     if (!title || !title.trim()) {
-      return NextResponse.json(
-        { error: t("titleRequired") },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: t("titleRequired") }, { status: 400 });
     }
 
     const menu = await db.menu.create({

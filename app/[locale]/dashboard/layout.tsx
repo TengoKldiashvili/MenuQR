@@ -40,9 +40,7 @@ export default async function DashboardLayout({
         </div>
       </nav>
 
-      <main className="relative max-w-7xl mx-auto px-6 py-12">
-        {children}
-      </main>
+      <main className="relative max-w-7xl mx-auto px-6 py-12">{children}</main>
     </div>
   );
 }

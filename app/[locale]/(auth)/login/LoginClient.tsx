@@ -28,10 +28,17 @@ export default function LoginClient() {
         redirect: false,
       });
 
-      if (result?.error) {
-        setError(t("errors.invalidCredentials"));
-        return;
-      }
+if (result?.error) {
+  if (result.error === "accountLocked") {
+    setError(
+      (t("block"))
+    );
+  } else {
+    setError(t("invalidCredentials"));
+  }
+  return;
+}
+
 
       router.push(`/${locale}/dashboard`);
       router.refresh();

@@ -30,7 +30,7 @@ export default function CategoryRow({ category, menuId }: CategoryRowProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [name, setName] = useState(category.name);
 
-  const handleDelete = async () => {  
+  const handleDelete = async () => {
     if (!confirm(t("confirmDelete", { name: category.name }))) return;
     setIsDeleting(true);
     try {
@@ -166,17 +166,11 @@ export default function CategoryRow({ category, menuId }: CategoryRowProps) {
           `}
         >
           {category.items.length === 0 ? (
-            <p className="text-sm text-white/50">
-              {t("empty")}
-            </p>
+            <p className="text-sm text-white/50">{t("empty")}</p>
           ) : (
             <div className="space-y-4">
               {category.items.map((item) => (
-                <ItemRow
-                  key={item.id}
-                  item={item}
-                  menuId={menuId}
-                />
+                <ItemRow key={item.id} item={item} menuId={menuId} />
               ))}
             </div>
           )}

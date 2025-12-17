@@ -80,15 +80,10 @@ export default async function Home({
 
           <h2 className="mt-6 text-[1.9rem] leading-tight sm:text-5xl md:text-6xl font-semibold tracking-tight">
             {t("headlineMain")}
-            <span className="text-white/60">
-              {" "}
-              {t("headlineHighlight")}
-            </span>
+            <span className="text-white/60"> {t("headlineHighlight")}</span>
           </h2>
 
-          <p className="mt-6 text-lg text-white/70 max-w-2xl">
-            {t("subhead")}
-          </p>
+          <p className="mt-6 text-lg text-white/70 max-w-2xl">{t("subhead")}</p>
 
           <div className="mt-10 flex flex-wrap gap-4">
             {!isLoggedIn ? (
@@ -132,9 +127,7 @@ export default async function Home({
                 className="rounded-2xl bg-gray-950/40 border border-white/10 p-6"
               >
                 <p className="text-sm font-medium">{t(titleKey)}</p>
-                <p className="text-sm text-white/60 mt-2">
-                  {t(descKey)}
-                </p>
+                <p className="text-sm text-white/60 mt-2">{t(descKey)}</p>
               </div>
             ))}
           </div>
@@ -150,9 +143,7 @@ export default async function Home({
             </div>
 
             <div className="rounded-2xl bg-gray-950/40 border border-white/10 p-6">
-              <p className="text-sm font-medium">
-                {t("previewCustomerTitle")}
-              </p>
+              <p className="text-sm font-medium">{t("previewCustomerTitle")}</p>
               <p className="text-sm text-white/60 mt-2">
                 {t("previewCustomerDesc")}
               </p>
@@ -170,15 +161,11 @@ export default async function Home({
             <div className="mt-6 flex flex-col items-center gap-2 text-sm text-white/70">
               <p>
                 {t("contactEmailLabel")}{" "}
-                <span className="text-white">
-                  {t("contactEmail")}
-                </span>
+                <span className="text-white">{t("contactEmail")}</span>
               </p>
               <p>
                 {t("contactInstagramLabel")}{" "}
-                <span className="text-white">
-                  {t("contactInstagram")}
-                </span>
+                <span className="text-white">{t("contactInstagram")}</span>
               </p>
             </div>
           </div>
@@ -187,9 +174,7 @@ export default async function Home({
             <h3 className="text-3xl font-semibold tracking-tight">
               {t("finalTitle")}
             </h3>
-            <p className="text-white/60 mt-3">
-              {t("finalDesc")}
-            </p>
+            <p className="text-white/60 mt-3">{t("finalDesc")}</p>
 
             <Link
               href={`/${locale}/${isLoggedIn ? "dashboard" : "register"}`}

@@ -6,22 +6,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  passwordHash  String
-  name          String?
-  emailVerified DateTime?
-  menus         Menu[]
-  createdAt     DateTime  @default(now())
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+
+  loginAttempts   Int      @default(0)
+  lockUntil       DateTime?
+
+
+  menus        Menu[]
+  createdAt    DateTime @default(now())
 }
 
 model EmailVerificationCode {
+  email        String   @id
+  codeHash     String
+  passwordHash String
+  name         String?
+  expiresAt    DateTime
+  attempts     Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([expiresAt])
+}
+
+model PasswordResetCode {
   id        String   @id @default(uuid())
   email     String
   codeHash  String
   expiresAt DateTime
+  attempts  Int      @default(0)
   createdAt DateTime @default(now())
 
   @@index([email])
@@ -36,12 +52,12 @@ model RateLimitEvent {
 }
 
 model Menu {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String?
   description String?
-  theme       String  @default("light")
+  theme       String   @default("light")
   logoUrl     String?
-  status      String  @default("DRAFT")
+  status      String   @default("DRAFT")
 
   user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
@@ -67,13 +83,4 @@ model Item {
   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
   createdAt   DateTime @default(now())
-}
-model PasswordResetCode {
-  id        String   @id @default(uuid())
-  email     String
-  codeHash  String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  @@index([email])
 }

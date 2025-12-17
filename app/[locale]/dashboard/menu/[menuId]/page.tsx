@@ -48,7 +48,7 @@ export default async function MenuBuilderPage({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
             <h1
-  className="
+              className="
     w-full
     font-semibold tracking-tight
     leading-tight
@@ -57,14 +57,12 @@ export default async function MenuBuilderPage({
     overflow-hidden
     text-ellipsis
   "
->
+            >
               {menu.title}
             </h1>
 
             {menu.description && (
-              <p className="text-white/60 mt-1">
-                {menu.description}
-              </p>
+              <p className="text-white/60 mt-1">{menu.description}</p>
             )}
           </div>
 
@@ -116,9 +114,7 @@ export default async function MenuBuilderPage({
 
       {menu.categories.length === 0 ? (
         <div className="rounded-3xl border border-white/10 bg-white/5 py-24 text-center backdrop-blur">
-          <p className="text-white/60 mb-6">
-            {t("emptyTitle")}
-          </p>
+          <p className="text-white/60 mb-6">{t("emptyTitle")}</p>
 
           <Link
             href={`/${locale}/dashboard/menu/${menuId}/add-category`}

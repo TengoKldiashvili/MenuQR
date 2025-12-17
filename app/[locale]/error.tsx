@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 
-export default function GlobalError({}: {
-  reset: () => void;
-}) {
+export default function GlobalError({}: { reset: () => void }) {
   return (
     <div className="min-h-screen bg-gray-950 text-white flex items-center justify-center px-6">
       <div className="max-w-md text-center">

@@ -18,4 +18,3 @@ export default function MenuThemeRouter({ menu }: { menu: PublicMenu }) {
       return <LightTheme menu={menu} />;
   }
 }
-

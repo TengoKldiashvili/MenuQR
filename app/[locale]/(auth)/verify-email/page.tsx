@@ -4,6 +4,16 @@ import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
+type VerifyEmailErrorKey =
+  | "invalidCode"
+  | "codeExpired"
+  | "tooManyAttempts"
+  | "tooManyRequests"
+  | "resendCooldown"
+  | "alreadyVerified"
+  | "generic";
+
+
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -13,7 +23,7 @@ export default function VerifyEmailPage() {
   const email = searchParams.get("email") || "";
 
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   async function submit() {
@@ -27,18 +37,11 @@ export default function VerifyEmailPage() {
         body: JSON.stringify({ email, code }),
       });
 
-      const data = await res.json();
+      const data: { error?: VerifyEmailErrorKey } = await res.json();
 
       if (!res.ok) {
-        if (data.error === "EMAIL_REQUIRED") {
-          setError(t("errors.emailRequired"));
-        } else if (data.error === "INVALID_CODE") {
-          setError(t("errors.invalidCode"));
-        } else if (data.error === "CODE_EXPIRED") {
-          setError(t("errors.codeExpired"));
-        } else {
-          setError(t("errors.generic"));
-        }
+        const errorKey = data?.error ?? "generic";
+        setError(t(`errors.${errorKey}`));
         setLoading(false);
         return;
       }
@@ -70,7 +73,9 @@ export default function VerifyEmailPage() {
         />
 
         {error && (
-          <div className="text-sm text-red-400">{error}</div>
+          <div className="text-sm text-red-400">
+            {error}
+          </div>
         )}
 
         <button

@@ -29,9 +29,7 @@ export default function ThemePicker({
         ${disabled ? "opacity-50 pointer-events-none" : ""}
       `}
     >
-      <label className="text-sm font-medium text-white">
-        {t("label")}
-      </label>
+      <label className="text-sm font-medium text-white">{t("label")}</label>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {THEMES.map((theme) => {
@@ -71,9 +69,7 @@ export default function ThemePicker({
                 </p>
 
                 {active && (
-                  <p className="text-xs text-white/50 mt-1">
-                    {t("selected")}
-                  </p>
+                  <p className="text-xs text-white/50 mt-1">{t("selected")}</p>
                 )}
               </div>
             </button>

@@ -19,10 +19,7 @@ export async function PATCH(
     const { name } = body;
 
     if (!name || !name.trim()) {
-      return NextResponse.json(
-        { error: "Name is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     const category = await db.category.findUnique({

@@ -3,11 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export default function LanguageSwitch({
-  locale,
-}: {
-  locale: string;
-}) {
+export default function LanguageSwitch({ locale }: { locale: string }) {
   const pathname = usePathname();
   const pathWithoutLocale = pathname.replace(/^\/(ka|en)/, "");
 

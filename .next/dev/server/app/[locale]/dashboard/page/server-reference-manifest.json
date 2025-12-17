@@ -1,0 +1,20 @@
+{
+  "node": {
+    "6064168252fe8d1e5643d86028ab0642d4fa2fe007": {
+      "workers": {
+        "app/[locale]/dashboard/page": {
+          "moduleId": "[project]/.next-internal/server/app/[locale]/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/[locale]/dashboard/menu/[menuId]/deleteMenu.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteMenu",
+          "filename": "app/[locale]/dashboard/menu/[menuId]/deleteMenu.ts"
+        }
+      },
+      "layer": {
+        "app/[locale]/dashboard/page": "action-browser"
+      },
+      "exportedName": "deleteMenu",
+      "filename": "app/[locale]/dashboard/menu/[menuId]/deleteMenu.ts"
+    }
+  },
+  "edge": {}
+}

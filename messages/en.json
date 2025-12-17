@@ -15,7 +15,11 @@
     "loading": "Signing in…",
     "noAccount": "Don’t have an account?",
     "create": "Create one",
-    "forgotPassword":"Forgot password?"
+    "forgotPassword": "Forgot password?",
+    "invalidCredentials": "Invalid email or password",
+    "generic": "Something went wrong. Please try again later.",
+    "block":"Account is locked for 5 minutes. Try again later."
+
   },
 
   "register": {
@@ -33,8 +37,8 @@
       "missingFields": "All fields are required",
       "passwordTooShort": "Password must be at least 8 characters",
       "emailExists": "User with this email already exists",
-      "generic": "Registration failed",
-      "invalidEmail": "Please enter a valid email address"
+      "invalidEmail": "Please enter a valid email address",
+      "generic": "Registration failed. Please try again."
     }
   },
 
@@ -50,7 +54,10 @@
     "emptyCta": "Create your first menu",
     "categories": "Categories",
     "items": "Items",
-    "limitReached": "The free plan allows only one menu. Upgrade to create more."
+    "limitReached": "The free plan allows only one menu. Upgrade to create more.",
+    "addMenu":"Create new menu",
+    "limited":"You’ve reached your free menu limit."
+
   },
 
   "buttons": {
@@ -58,29 +65,29 @@
   },
 
   "createMenu": {
-    "back": "Back to dashboard",
-    "title": "Create a new menu",
-    "menuTitle": "Menu title",
-    "menuTitlePlaceholder": "e.g. Summer Menu",
-    "description": "Description",
-    "descriptionPlaceholder": "Optional short description",
-    "create": "Create menu",
-    "creating": "Creating…",
-    "cancel": "Cancel",
-    "error": "Something went wrong",
-    "checking": "Checking…"
-  },
-
+  "back": "Back to dashboard",
+  "title": "Create a new menu",
+  "menuTitle": "Menu title",
+  "menuTitlePlaceholder": "e.g. Summer Menu",
+  "description": "Description",
+  "descriptionPlaceholder": "Optional short description",
+  "create": "Create menu",
+  "creating": "Saving…",
+  "save": "Save changes",
+  "cancel": "Cancel",
+  "checking": "Checking…",
+  "error": "Something went wrong"
+},
   "logo": {
     "label": "Logo",
-    "optional": "Optional",
+    "optional": "After selecting a photo, make sure to click the Upload button.",
     "button": "Choose file",
     "allowed": "Image (max 4MB)",
     "remove": "Remove",
     "alt": "Logo",
-    "error": "Logo upload failed. The file is larger than 4MB.",
+    "upload": "Upload",
     "fileTooLarge": "File is too large (maximum 4MB)",
-    "upload": "Upload"
+    "error": "Logo upload failed. The file is larger than 4MB."
   },
 
   "theme": {
@@ -115,14 +122,14 @@
   "item": {
     "name": "Name",
     "price": "Price",
+    "description": "Description",
     "edit": "Edit",
     "save": "Save",
     "saving": "Saving…",
     "cancel": "Cancel",
     "delete": "Delete",
     "deleting": "Deleting…",
-    "confirmDelete": "Delete the item \"{name}\"?",
-    "description": "Description"
+    "confirmDelete": "Delete the item \"{name}\"?"
   },
 
   "addCategory": {
@@ -164,18 +171,17 @@
   "uploadimages": {
     "label": "Image",
     "logoLabel": "Image",
-    "optional": "Optional",
+    "optional": "After selecting a photo, make sure to click the Upload button.",
     "button": "Upload",
     "allowed": "PNG or JPG, up to 4MB",
     "remove": "Remove",
-    "error": "Upload failed. The file is larger than 4MB.",
     "previewAlt": "Preview",
-    "tooLarge": "File is too large (maximum 4MB)"
+    "tooLarge": "File is too large (maximum 4MB)",
+    "error": "Upload failed. The file is larger than 4MB."
   },
 
   "mainpage": {
     "goToDashboard": "Go to dashboard",
-
     "brand": "DMENU",
 
     "navSignIn": "Sign in",
@@ -240,46 +246,60 @@
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
     "submit": "Reset password",
-    "loading": "Resetting...",
+    "loading": "Resetting…",
     "success": "Password successfully changed",
     "backToLogin": "Back to login",
     "errors": {
       "emailNotFound": "Email not found",
       "passwordTooShort": "Password must be at least 8 characters",
       "passwordsNotMatch": "Passwords do not match",
-      "generic": "Something went wrong"
+      "invalidCode": "Invalid verification code",
+      "codeExpired": "Verification code expired",
+      "tooManyAttempts": "Too many attempts. Please try again later.",
+      "tooManyRequests": "Too many requests. Please try again later.",
+      "resendCooldown": "Please wait a bit before requesting another code",
+      "generic": "Something went wrong. Please try again later."
     }
   },
+
   "forgotPassword": {
     "title": "Forgot password",
     "subtitle": "Enter your email and we will send you a code",
     "email": "Email",
     "submit": "Send code",
-    "loading": "Sending...",
+    "loading": "Sending…",
     "success": "A verification code was sent to your email",
     "backToLogin": "Back to login",
     "errors": {
       "emailRequired": "Email is required",
       "userNotFound": "User with this email does not exist",
-      "generic": "Something went wrong"
+      "resendCooldown": "Please wait a bit before requesting another code",
+      "tooManyRequests": "Too many requests. Please try again later.",
+      "generic": "Something went wrong. Please try again later."
     }
   },
+
   "verifyEmail": {
     "title": "Verify your email",
     "subtitle": "Code sent to:",
     "codePlaceholder": "6-digit code",
     "submit": "Verify",
-    "loading": "Verifying...",
+    "loading": "Verifying…",
     "errors": {
       "emailRequired": "Email is required",
+      "userNotFound": "User not found",
       "invalidCode": "Invalid code",
       "codeExpired": "Code expired",
-      "generic": "Verification failed"
+      "tooManyAttempts": "Too many attempts. Try again later.",
+      "tooManyRequests": "Too many requests. Try again later.",
+      "resendCooldown": "Please wait before resending the code",
+      "alreadyVerified": "Email is already verified",
+      "generic": "Verification failed. Please try again."
     }
   },
-  "menuActions": {
-  "confirmDelete": "Are you sure you want to delete this menu?",
-  "deleteTitle": "Delete menu"
-}
 
+  "menuActions": {
+    "confirmDelete": "Are you sure you want to delete this menu?",
+    "deleteTitle": "Delete menu"
+  }
 }

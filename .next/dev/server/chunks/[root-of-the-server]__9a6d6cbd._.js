@@ -138,6 +138,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$
 ;
 ;
 ;
+const MAX_ATTEMPTS = 5;
+const LOCK_TIME_MS = 5 * 60 * 1000; // 5 წუთი
 const authOptions = {
     providers: [
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$providers$2f$credentials$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"])({
@@ -153,8 +155,8 @@ const authOptions = {
                 }
             },
             async authorize (credentials) {
-                if (!credentials?.email || !credentials?.password) {
-                    return null;
+                if (!credentials?.email || !credentials.password) {
+                    throw new Error("invalidCredentials");
                 }
                 const user = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["db"].user.findUnique({
                     where: {
@@ -162,12 +164,45 @@ const authOptions = {
                     }
                 });
                 if (!user) {
-                    return null;
+                    throw new Error("invalidCredentials");
                 }
-                const isPasswordValid = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(credentials.password, user.password);
+                if (user.lockUntil && user.lockUntil > new Date()) {
+                    throw new Error("accountLocked");
+                }
+                const isPasswordValid = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(credentials.password, user.passwordHash);
                 if (!isPasswordValid) {
-                    return null;
+                    const attempts = user.loginAttempts + 1;
+                    if (attempts >= MAX_ATTEMPTS) {
+                        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["db"].user.update({
+                            where: {
+                                id: user.id
+                            },
+                            data: {
+                                loginAttempts: attempts,
+                                lockUntil: new Date(Date.now() + LOCK_TIME_MS)
+                            }
+                        });
+                        throw new Error("accountLocked");
+                    }
+                    await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["db"].user.update({
+                        where: {
+                            id: user.id
+                        },
+                        data: {
+                            loginAttempts: attempts
+                        }
+                    });
+                    throw new Error("invalidCredentials");
                 }
+                await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["db"].user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        loginAttempts: 0,
+                        lockUntil: null
+                    }
+                });
                 return {
                     id: user.id,
                     email: user.email,

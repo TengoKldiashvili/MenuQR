@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/app/%5Blocale%5D/error.tsx"],"sourcesContent":["\"use client\";\n\nimport Link from \"next/link\";\n\nexport default function GlobalError({}: { reset: () => void }) {\n  return (\n    <div className=\"min-h-screen bg-gray-950 text-white flex items-center justify-center px-6\">\n      <div className=\"max-w-md text-center\">\n        <h1 className=\"text-5xl font-semibold mb-6\">404</h1>\n        <p className=\"text-white/60 mb-10\">\n          Something went wrong. Please try again.\n        </p>\n\n        <Link\n          href=\"/\"\n          className=\"inline-block px-6 py-3 rounded-xl bg-white text-gray-950 text-sm font-medium hover:opacity-90 transition\"\n        >\n          Go back home\n        </Link>\n      </div>\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;AAEA;AAFA;;;AAIe,SAAS,YAAY,EAAyB;IAC3D,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC;YAAI,WAAU;;8BACb,8OAAC;oBAAG,WAAU;8BAA8B;;;;;;8BAC5C,8OAAC;oBAAE,WAAU;8BAAsB;;;;;;8BAInC,8OAAC,uKAAI;oBACH,MAAK;oBACL,WAAU;8BACX;;;;;;;;;;;;;;;;;AAMT"}}]
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/components/SignOutButton.tsx"],"sourcesContent":["\"use client\";\n\nimport { signOut } from \"next-auth/react\";\nimport { useRouter } from \"next/navigation\";\nimport { useTranslations } from \"next-intl\";\n\nexport default function SignOutButton() {\n  const router = useRouter();\n  const t = useTranslations(\"buttons\");\n\n  return (\n    <button\n      onClick={() => {\n        signOut({ redirect: false }).then(() => {\n          router.push(\"/\");\n          router.refresh();\n        });\n      }}\n      className=\"\n        px-4 py-2 rounded-xl text-sm\n        border border-white/20\n        text-white/70\n        hover:border-white/50\n        hover:text-white\n        transition\n      \"\n    >\n      {t(\"signOut\")}\n    </button>\n  );\n}\n"],"names":[],"mappings":";;;;;AAEA;AACA;AACA;;;AAJA;;;;AAMe,SAAS;;IACtB,MAAM,SAAS,IAAA,kJAAS;IACxB,MAAM,IAAI,IAAA,4MAAe,EAAC;IAE1B,qBACE,6LAAC;QACC,SAAS;YACP,IAAA,4JAAO,EAAC;gBAAE,UAAU;YAAM,GAAG,IAAI,CAAC;gBAChC,OAAO,IAAI,CAAC;gBACZ,OAAO,OAAO;YAChB;QACF;QACA,WAAU;kBAST,EAAE;;;;;;AAGT;GAxBwB;;QACP,kJAAS;QACd,4MAAe;;;KAFH"}}]
+}

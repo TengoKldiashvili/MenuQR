@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/lib/db.ts"],"sourcesContent":["import { PrismaClient } from \"@prisma/client\";\n\nconst globalForPrisma = globalThis as unknown as {\n  prisma: PrismaClient | undefined;\n};\n\nexport const db =\n\n  globalForPrisma.prisma ??\n  new PrismaClient({\n    log: process.env.NODE_ENV === \"development\" ? [\"error\", \"warn\"] : [\"error\"],\n    \n  });\n\nif (process.env.NODE_ENV !== \"production\") globalForPrisma.prisma = db;\n\n"],"names":[],"mappings":";;;;AAAA;;AAEA,MAAM,kBAAkB;AAIjB,MAAM,KAEX,gBAAgB,MAAM,IACtB,IAAI,6IAAY,CAAC;IACf,KAAK,uCAAyC;QAAC;QAAS;KAAO,GAAG;AAEpE;AAEF,wCAA2C,gBAAgB,MAAM,GAAG"}},
+    {"offset": {"line": 64, "column": 0}, "map": {"version":3,"sources":["file:///Users/carlo/Desktop/MenuQR/app/api/menus/%5Bid%5D/route.ts"],"sourcesContent":["import { db } from \"@/lib/db\";\n\nexport async function PUT(\n  req: Request,\n  { params }: { params: { menuId: string } }\n) {\n  const body = await req.json();\n\n  const menu = await db.menu.update({\n    where: { id: params.menuId },\n    data: body,\n  });\n\n  return Response.json(menu);\n}\n"],"names":[],"mappings":";;;;AAAA;;AAEO,eAAe,IACpB,GAAY,EACZ,EAAE,MAAM,EAAkC;IAE1C,MAAM,OAAO,MAAM,IAAI,IAAI;IAE3B,MAAM,OAAO,MAAM,iHAAE,CAAC,IAAI,CAAC,MAAM,CAAC;QAChC,OAAO;YAAE,IAAI,OAAO,MAAM;QAAC;QAC3B,MAAM;IACR;IAEA,OAAO,SAAS,IAAI,CAAC;AACvB"}}]
+}

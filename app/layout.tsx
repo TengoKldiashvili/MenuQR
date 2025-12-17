@@ -6,14 +6,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (   
-  <html
+  return (
+    <html
       className={`${fontEn.variable} ${fontKa.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen antialiased">
-        {children}
-      </body>
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }

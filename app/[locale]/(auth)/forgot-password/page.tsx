@@ -5,6 +5,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
+type ForgotPasswordErrorKey =
+  | "emailRequired"
+  | "userNotFound"
+  | "resendCooldown"
+  | "tooManyRequests"
+  | "generic";
+
 export default function ForgotPasswordPage() {
   const t = useTranslations("forgotPassword");
   const locale = useLocale();
@@ -12,7 +19,7 @@ export default function ForgotPasswordPage() {
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,16 +34,11 @@ export default function ForgotPasswordPage() {
         body: JSON.stringify({ email }),
       });
 
-      const data = await res.json();
+      const data: { error?: ForgotPasswordErrorKey } = await res.json();
 
       if (!res.ok) {
-        if (data.error === "EMAIL_REQUIRED") {
-          setError(t("errors.emailRequired"));
-        } else if (data.error === "USER_NOT_FOUND") {
-          setError(t("errors.userNotFound"));
-        } else {
-          setError(t("errors.generic"));
-        }
+        const errorKey = data?.error ?? "generic";
+        setError(t(`errors.${errorKey}`));
         setLoading(false);
         return;
       }

@@ -2,6 +2,9 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "./db";
 import bcrypt from "bcryptjs";
+import { LIMITS } from "@/lib/limits";
+
+const MAX_ATTEMPTS = LIMITS.BLOCKED_USER;
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,8 +16,8 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
+        if (!credentials?.email || !credentials.password) {
+          throw new Error("invalidCredentials");
         }
 
         const user = await db.user.findUnique({
@@ -22,10 +25,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          return null;
+          throw new Error("invalidCredentials");
         }
-        if (!user.emailVerified) {
-          return null;
+
+        if (user.lockUntil && user.lockUntil > new Date()) {
+          throw new Error("accountLocked");
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -34,8 +38,35 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isPasswordValid) {
-          return null;
+          const attempts = user.loginAttempts + 1;
+
+          if (attempts >= MAX_ATTEMPTS) {
+            await db.user.update({
+              where: { id: user.id },
+              data: {
+                loginAttempts: attempts,
+                lockUntil: new Date(Date.now() + 5 * 60 * 1000)
+              },
+            });
+
+            throw new Error("accountLocked");
+          }
+
+          await db.user.update({
+            where: { id: user.id },
+            data: { loginAttempts: attempts },
+          });
+
+          throw new Error("invalidCredentials");
         }
+
+        await db.user.update({
+          where: { id: user.id },
+          data: {
+            loginAttempts: 0,
+            lockUntil: null,
+          },
+        });
 
         return {
           id: user.id,
@@ -62,9 +93,9 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-        session.user.name = token.name;
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.name = token.name as string;
       }
       return session;
     },

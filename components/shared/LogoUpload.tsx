@@ -25,8 +25,7 @@ export default function LogoUpload({ value, onChange }: LogoUploadProps) {
       )}
 
       <label className="block text-sm font-medium text-white">
-        {t("label")}{" "}
-        <span className="text-white/40">({t("optional")})</span>
+        {t("label")} <span className="text-white/40">({t("optional")})</span>
       </label>
 
       {value ? (
@@ -54,7 +53,7 @@ export default function LogoUpload({ value, onChange }: LogoUploadProps) {
         <UploadDropzone
           endpoint="logoUploader"
           onClientUploadComplete={(res) => {
-            const url = res?.[0]?.url;
+            const url = res?.[0]?.ufsUrl;
             if (url) {
               onChange(url);
               setError(null);
@@ -72,8 +71,7 @@ export default function LogoUpload({ value, onChange }: LogoUploadProps) {
               "border border-white/20 rounded-xl bg-transparent hover:border-white/40 transition",
             label: "text-white/80 text-sm",
             uploadIcon: "text-white/60",
-            button:
-              "bg-transparent text-white/80 text-sm font-medium",
+            button: "bg-transparent text-white/80 text-sm font-medium",
           }}
         />
       )}

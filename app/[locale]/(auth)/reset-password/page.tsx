@@ -1,9 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+
+type ResetPasswordErrorKey =
+  | "emailNotFound"
+  | "passwordTooShort"
+  | "passwordsNotMatch"
+  | "invalidCode"
+  | "codeExpired"
+  | "tooManyAttempts"
+  | "tooManyRequests"
+  | "resendCooldown"
+  | "generic";
+
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -16,9 +28,22 @@ export default function ResetPasswordPage() {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [resendLoading, setResendLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+
+    const timer = setInterval(() => {
+      setCooldown((c) => c - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,11 +77,11 @@ export default function ResetPasswordPage() {
         }),
       });
 
-      const data = await res.json();
+      const data: { error?: ResetPasswordErrorKey } = await res.json();
 
       if (!res.ok) {
-        setError(data.error || t("errors.generic"));
-        setLoading(false);
+        const errorKey = data?.error ?? "generic";
+        setError(t(`errors.${errorKey}`));
         return;
       }
 
@@ -69,6 +94,36 @@ export default function ResetPasswordPage() {
       setError(t("errors.generic"));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!email || cooldown > 0) return;
+
+    setResendLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(
+          t(`errors.${data?.error ?? "generic"}`)
+        );
+        return;
+      }
+
+      setCooldown(60); 
+    } catch {
+      setError(t("errors.generic"));
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -143,6 +198,19 @@ export default function ResetPasswordPage() {
           >
             {loading ? t("loading") : t("submit")}
           </button>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={handleResend}
+              disabled={resendLoading || cooldown > 0}
+              className="text-sm text-white/60 hover:underline disabled:opacity-40"
+            >
+              {cooldown > 0
+                ? `კოდის ხელახლა გაგზავნა (${cooldown}s)`
+                : "კოდის ხელახლა გაგზავნა"}
+            </button>
+          </div>
 
           <p className="text-center text-sm text-white/60">
             <Link

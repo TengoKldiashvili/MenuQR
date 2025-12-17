@@ -39,19 +39,29 @@ module.exports = mod;
 "use strict";
 
 __turbopack_context__.s([
-    "ourFileRouter",
-    ()=>ourFileRouter
+    "uploadRouter",
+    ()=>uploadRouter
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$uploadthing$2f$next$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/uploadthing/next/index.js [app-route] (ecmascript) <locals>");
 ;
 const f = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$uploadthing$2f$next$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createUploadthing"])();
-const ourFileRouter = {
-    imageUploader: f({
+const uploadRouter = {
+    itemImageUploader: f({
         image: {
             maxFileSize: "4MB",
             maxFileCount: 1
         }
-    }).onUploadComplete(async ({ metadata, file })=>{
+    }).middleware(async ()=>({})).onUploadComplete(({ file })=>{
+        return {
+            url: file.url
+        };
+    }),
+    logoUploader: f({
+        image: {
+            maxFileSize: "4MB",
+            maxFileCount: 1
+        }
+    }).middleware(async ()=>({})).onUploadComplete(({ file })=>{
         return {
             url: file.url
         };
@@ -72,7 +82,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$uploadthing$2f
 ;
 ;
 const { GET, POST } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$uploadthing$2f$next$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createRouteHandler"])({
-    router: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$uploadthing$2f$core$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ourFileRouter"]
+    router: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$api$2f$uploadthing$2f$core$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["uploadRouter"]
 });
 }),
 ];
